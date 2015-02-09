@@ -1,2 +1,2 @@
-# csci4448_project
-Push test
+Project page website:
+https://horatiusmmxiv.github.io/csci4448_project/
