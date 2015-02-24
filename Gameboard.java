@@ -31,4 +31,6 @@ public class Gameboard{
       System.out.println(c.x + " " + c.y);
     }
   }
+
+  //getter for checkers should return read only array.
 }
