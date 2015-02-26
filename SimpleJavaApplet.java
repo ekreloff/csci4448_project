@@ -7,6 +7,9 @@ public class SimpleJavaApplet extends JApplet{
 	
 	public void paint(Graphics g){
 		board = new GameBoard();
-		board.createBoard(g);
+		board.drawBoard(g);
+		board.drawRedCheckers(g);
+		board.drawBlackCheckers(g);
+		//board.printCheckers();
 	}
 }
