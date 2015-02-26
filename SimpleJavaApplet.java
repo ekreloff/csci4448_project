@@ -22,10 +22,10 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 	
 	public void mouseEntered(MouseEvent me){}
 	public void mouseExited(MouseEvent me){}
-	public void mousePressed(MouseEvent me){}
-	public void mouseReleased(MouseEvent me){}
-	public void mouseClicked(MouseEvent me){
+	public void mousePressed(MouseEvent me){
 		status = "Mouse button pressed at: x=" + me.getX() + " y=" + me.getY();
 		repaint();
-	}			
+	}
+	public void mouseReleased(MouseEvent me){}
+	public void mouseClicked(MouseEvent me){}			
 }
