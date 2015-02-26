@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.applet.*;
 import java.awt.*;
 import javax.swing.*;
 
