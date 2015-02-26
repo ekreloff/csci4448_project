@@ -1,6 +1,11 @@
 import java.util.ArrayList;
+import java.applet.*;
+import java.awt.*;
+import javax.swing.*;
 
-public class Gameboard{
+public class GameBoard extends SimpleJavaApplet{
+	private int squaresize = 40;
+	/*
   public Player player1;
   public Player player2;
   private ArrayList<Checker> checkers;
@@ -31,6 +36,26 @@ public class Gameboard{
       System.out.println(c.x + " " + c.y);
     }
   }
+	  */
+  
+	public void createBoard(Graphics g){
+		for (int i = 0; i <=7; i++){
+			this.drawRows(g, i, squaresize);
+		}
+	}
+	
+	public void drawRows(Graphics g, int y, int size){
+		for (int i = 1;i <= 8; i++){
+			if((y+i)%2 == 1){
+				g.setColor(Color.lightGray);
+				g.fillRect(i*size, y*size, size, size);
+			}else{
+				g.setColor(Color.darkGray);
+				g.fillRect(i*size, y*size, size, size);
+			}
+		}
+	}
+	
 
   //getter for checkers should return read only array.
 }
