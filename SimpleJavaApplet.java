@@ -17,20 +17,20 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 	
 	public void init(){
 		lboard = new LeaderBoard();
-		board = new GameBoard();
+		/*board = new GameBoard();
 		addMouseListener(this);
 		this.mouseCoordinatesArea();
-		this.createMenu();
+		this.createMenu();*/
 	}
 	
 	
 	public void paint(Graphics g){
 		//lboard = new LeaderBoard();
 		//board = new GameBoard();
-		board.drawBoard(g);
+		/*board.drawBoard(g);
 		board.drawRedCheckers(g);
 		board.drawBlackCheckers(g);
-		board.printCheckers();
+		board.printCheckers();*/
 	}
 	
 	public void mouseEntered(MouseEvent me){}
