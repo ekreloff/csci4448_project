@@ -1,16 +1,23 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
+import java.net.*;
+
+
 
 public class SimpleJavaApplet extends JApplet implements MouseListener{
 	GameBoard board;
+	LeaderBoard lboard;
 	String status;
-	JTextArea mouse_coordinates;
+	JTextArea mouseCoordinates;
 	JScrollPane sp;
 	JFrame menu;
 	JButton start, instructions, settings;
 	
 	public void init(){
+		lboard = new LeaderBoard();
+		board = new GameBoard();
 		addMouseListener(this);
 		this.mouseCoordinatesArea();
 		this.createMenu();
@@ -18,18 +25,19 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 	
 	
 	public void paint(Graphics g){
-		board = new GameBoard();
+		//lboard = new LeaderBoard();
+		//board = new GameBoard();
 		board.drawBoard(g);
 		board.drawRedCheckers(g);
 		board.drawBlackCheckers(g);
-		//board.printCheckers();
+		board.printCheckers();
 	}
 	
 	public void mouseEntered(MouseEvent me){}
 	public void mouseExited(MouseEvent me){}
 	public void mousePressed(MouseEvent me){
 		status = "Mouse button pressed at: x=" + me.getX() + " y=" + me.getY() + "\n";
-		mouse_coordinates.append(status);
+		mouseCoordinates.append(status);
 		//repaint();
 	}
 	public void mouseReleased(MouseEvent me){}
@@ -38,8 +46,8 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 	public void mouseCoordinatesArea(){
 		// Output mousePressed to text area with scroll bars at bottom of window
 		setLayout(new BorderLayout());
-		mouse_coordinates = new JTextArea(5, 5);
-		sp = new JScrollPane(mouse_coordinates);
+		mouseCoordinates = new JTextArea(5, 5);
+		sp = new JScrollPane(mouseCoordinates);
 		add(sp, BorderLayout.SOUTH);
 	}
 	
@@ -57,5 +65,5 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 		//menu.pack();
 		menu.setSize(200, 200);
 		menu.setVisible(true);
-	}			
+	}
 }
