@@ -1,14 +1,5 @@
-Bob
-Jim
-JonMatt
-Matt
-Bill
-Bill
-Bill
-Bill
-Bill
-Bill
-Bill
-Bill
-Bob
-Bob
+Name	Score
+------------------
+Bob	5
+Jim	6
+Jon	8
