@@ -18,8 +18,8 @@ public class SimpleJavaApplet extends JApplet implements MouseListener, ActionLi
 	public void init(){
 		//lboard = new LeaderBoard();
 		board = new GameBoard();
-		addMouseListener(this);
-		this.mouseCoordinatesArea();
+		//addMouseListener(this);
+		//this.mouseCoordinatesArea();
 		this.createMenu();
 	}
 	
@@ -63,7 +63,7 @@ public class SimpleJavaApplet extends JApplet implements MouseListener, ActionLi
 	public void createMenu(){
 		menu = new JFrame("Menu");
 		menu.setLayout(new GridLayout(3,1));
-		menu.setLocation(200, 200);
+		menu.setLocation(425, 100);
 
 		leaderBoardB = new JButton("Leaderboard");
 		leaderBoardB.addActionListener(this);
@@ -76,7 +76,7 @@ public class SimpleJavaApplet extends JApplet implements MouseListener, ActionLi
 		menu.add(start);
 		menu.add(instructions);
 		menu.add(settings);
-		
+
 		menu.setSize(200, 200);
 		menu.setVisible(true);
 	}
