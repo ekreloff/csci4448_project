@@ -1,7 +1,7 @@
 Project page website:
 https://horatiusmmxiv.github.io/csci4448_project/
 
-** This website doesn't work for writing to leaderboard.txt so I'm going to look for a web application hosting service **
+**This website doesn't work for writing to leaderboard.txt so I'm going to look for a web application hosting service**
 
 On your local machine
 ----------------------
