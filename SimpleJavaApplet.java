@@ -16,19 +16,19 @@ public class SimpleJavaApplet extends JApplet implements MouseListener, ActionLi
 	JButton start, instructions, settings, leaderBoardB;
 	
 	public void init(){
-		//lboard = new LeaderBoard();
-		board = new GameBoard();
+		lboard = new LeaderBoard();
+		//board = new GameBoard();
 		//addMouseListener(this);
 		//this.mouseCoordinatesArea();
-		this.createMenu();
+		//this.createMenu();
 	}
 	
 	
 	public void paint(Graphics g){
-		board.drawBoard(g);
-		board.drawRedCheckers(g);
-		board.drawBlackCheckers(g);
-		board.printCheckers();
+		//board.drawBoard(g);
+		//board.drawRedCheckers(g);
+		//board.drawBlackCheckers(g);
+		//board.printCheckers();
 	}
 	
 	public void mouseEntered(MouseEvent me){}

@@ -4,10 +4,9 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 
-public class LeaderBoard implements ActionListener{
-  String lfile = new String("leaderboard.txt");
+public class LeaderBoard extends JApplet implements ActionListener{
+  String docRoot = new String("http://localhost:8888/");
 	JFrame frame;
-  StringBuffer strBuff;
 	JTextArea lArea;
   JLabel nameLabel;
   JTextField nameInput;
@@ -56,7 +55,7 @@ public class LeaderBoard implements ActionListener{
   public void actionPerformed(ActionEvent ae){
     Object obj = ae.getSource();
     if(obj == submitButton){
-        writeFile("\n" + nameInput.getText());
+        writeFile(nameInput.getText());
         readFile();
     }
   }
@@ -69,11 +68,16 @@ public class LeaderBoard implements ActionListener{
   /* Read from the leaderboard.txt and put in the textarea */
   public void readFile(){
     lArea.setText(null);
-    String line;  
+    String line; 
+    StringBuffer strBuff; 
+    URL url = null;
     try{
-      InputStream in = LeaderBoard.class.getResourceAsStream(lfile);
+      url = new URL(docRoot + "leaderboard.txt");
+    }
+    catch(MalformedURLException e) {}
+    try{
+      InputStream in = url.openStream();
       BufferedReader bf = new BufferedReader(new InputStreamReader(in));
-      //readArea.append("File Name : " + lfile + "\n");
       while((line = bf.readLine()) != null){
         lArea.append(line + "\n");
       }
@@ -86,10 +90,10 @@ public class LeaderBoard implements ActionListener{
   /* Write a string to leadership.txt */
   public void writeFile(String text){
     try{
-      File f = new File(lfile);
-      BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-      out.write(text);
-      out.close();
+      URL url = new URL(docRoot + "leaderboard.php?name=" + text);
+      //System.out.println(url.getPath());
+      URLConnection urlConn = url.openConnection();
+      urlConn.getContent();
     }catch(IOException e){
       e.printStackTrace();
     }
