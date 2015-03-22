@@ -12,6 +12,6 @@ If you are running MAMP, LAMP, ...  or just Apache w/ PHP on port 8888 on your l
 2. Compile the applet with:
   * **javac** SimpleJavaApplet.java
 3. To run the applet:
-  * **appletviewer** index.html
+  * **appletviewer** index.html or visit **localhost:8888** in your browsers
 
 
