@@ -19,7 +19,9 @@ public class AI{
 		this.myColor = color;
 	}
 
-
+//*************************************************************************************	
+//*************************************************************************************
+//*************************************************************************************
 	// classes to use for internal representation of minimax
 	private class InternalRepresentation{
 		public int me;
@@ -51,7 +53,7 @@ public class AI{
 
 		public InternalRepresentation(InternalRepresentation oldR, Move move){
 			board = oldR.board;
-			
+
 		}
 
 		private calculateValue(){
