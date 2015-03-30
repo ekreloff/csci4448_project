@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class AI{
 
 	private int myColor;
@@ -8,11 +10,11 @@ public class AI{
 	}
 
 	private InternalRepresentation maxi(InternalRepresentation internalRep){
-
+		return null;
 	}
 
 	private InternalRepresentation mini(InternalRepresentation internalRep){
-
+		return null;
 	}
 
 	public void setColor(int color){
@@ -22,7 +24,7 @@ public class AI{
 //*************************************************************************************	
 //*************************************************************************************
 //*************************************************************************************
-	// classes to use for internal representation of minimax
+// classes to use for internal representation of minimax
 	private class InternalRepresentation{
 		public int me;
 		public int meCount;
@@ -33,8 +35,8 @@ public class AI{
 
 		public InternalRepresentation(List<Checker> checkers, int myColor){
 			board = new Integer[8][8];
-			for (int i; i++; i < 8){
-				for (int j; j++; j < 8){
+			for (int i = 0; i < 8; i++ ){
+				for (int j = 0; j < 8; j++ ){
 					board[i][j] = 0;
 				}
 			}
@@ -56,16 +58,16 @@ public class AI{
 
 		}
 
-		private calculateValue(){
+		private void calculateValue(){
 			this.value = meCount - opCount;
 		}
 
-		private determineValidMoves(){
+		private void  determineValidMoves(){
 
 		}
 
-		public isTerminal(){
-			return meCount == 0 || opCount == 0 || len(validMoves) == 0
+		public boolean isTerminal(){
+			return meCount == 0 || opCount == 0 || validMoves.size() == 0;
 		}
 	}
 
@@ -76,11 +78,11 @@ public class AI{
 		public int oldX;
 		public int oldY;
 
-		public Move(int nX, int nY, int oX, int, oY){
+		public Move(int nX, int nY, int oX, int oY){
 			this.newX = nX;
 			this.newY = nY;
 			this.oldX = oX;
-			this.oldY = oy;
+			this.oldY = oY;
 		}
 	}
 
