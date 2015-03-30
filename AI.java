@@ -14,16 +14,75 @@ public class AI{
 	public int[] determineMove(List<Checker> checkers){
 	//Minimax
 		InternalRepresentation start = new InternalRepresentation(checkers,this.myColor);
+		Move best = null;
+		int maxVal = 0;
 
-		return new int[0];
+		for (Move m : start.validMoves){
+			InternalRepresentation next = 
+				mini(new InternalRepresentation(start,m,this.myColor),7);
+			if (best == null) {
+				best = m;
+				maxVal = next.value;
+			} else{
+				if (next.value > maxVal){
+					maxVal = next.value;
+					best = m;
+				}
+			}
+		}
+
+		if (best.take) return new int[] {best.oldX,best.oldY,best.newX,best.newY,best.takenX,best.takenY};
+		else return new int[]{best.oldX,best.oldY,best.newX,best.newY};
 	}
 
-	private InternalRepresentation maxi(InternalRepresentation internalRep){
-		return null;
+	private InternalRepresentation maxi(InternalRepresentation internalRep,int depth){
+		if (internalRep.isTerminal() || depth == 0){
+			return internalRep;
+		} else {
+			InternalRepresentation best = null;
+			int maxVal = 0;
+
+			for (Move m : internalRep.validMoves){
+				InternalRepresentation next = 
+					mini(new InternalRepresentation(internalRep,m,this.myColor),depth--);
+				if (best == null) {
+					best = next;
+					maxVal = next.value;
+				} else{
+					if (next.value > maxVal){
+						maxVal = next.value;
+						best = next;
+					}
+				}
+			}
+
+			return best;
+		}
 	}
 
-	private InternalRepresentation mini(InternalRepresentation internalRep){
-		return null;
+	private InternalRepresentation mini(InternalRepresentation internalRep, int depth){
+		if (internalRep.isTerminal() || depth == 0){
+			return internalRep;
+		} else {
+			InternalRepresentation worst = null;
+			int minVal = 0;
+
+			for (Move m : internalRep.validMoves){
+				InternalRepresentation next = 
+					maxi(new InternalRepresentation(internalRep,m,this.opColor),depth--);
+				if (worst == null) {
+					worst = next;
+					minVal = next.value;
+				} else{
+					if (next.value < minVal){
+						minVal = next.value;
+						worst = next;
+					}
+				}
+			}
+
+			return worst;
+		}
 	}
 
 	public void setColor(int color){
