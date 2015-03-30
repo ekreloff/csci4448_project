@@ -5,9 +5,17 @@ public class AI{
 	private int myColor;
 	private int opColor;
 
+	public AI(int myColor, int opColor){
+		this.myColor = myColor;
+		this.opColor = opColor;
+	}
+
 ///*Checker[] checkers*/
-	public void determineMove(List<Checker> checkers){
+	public int[] determineMove(List<Checker> checkers){
 	//Minimax
+		InternalRepresentation start = new InternalRepresentation(checkers,this.myColor);
+
+		return new int[0];
 	}
 
 	private InternalRepresentation maxi(InternalRepresentation internalRep){
@@ -61,8 +69,29 @@ public class AI{
 		}
 
 		public InternalRepresentation(InternalRepresentation oldR, Move move, int who){
-			board = oldR.board;
+			this.board = new Integer[8][8];
+			for (int i = 0; i < 8; i++ ){
+				for (int j = 0; j < 8; j++ ){
+					board[i][j] = oldR.board[i][j];
+				}
+			}
+			this.me = oldR.me;
+			this.meCount = oldR.meCount;
+			this.opCount = oldR.opCount;
+			if (move.take){
+				board[move.newX][move.newY] = board[move.oldX][move.oldY];
+				board[move.oldX][move.oldY] = 0;
+				int takenP = board[move.takenX][move.takenY];
+				board[move.takenX][move.takenY] = 0;
+				if (takenP == me || takenP == me * 10) meCount--;
+				else opCount --;
+			} else{
+				board[move.newX][move.newY] = board[move.oldX][move.oldY];
+				board[move.oldX][move.oldY] = 0;
+			}
 
+			calculateValue();
+			determineValidMoves(who);
 		}
 
 		private void calculateValue(){
@@ -85,24 +114,24 @@ public class AI{
 					if (board[i][j] != 0 && (board[i][j]) == 1){
 						if (takeMove){
 							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
-								validMoves.add(new Move(i,j,i+2,j+2,true));
+								validMoves.add(new Move(i,j,i+2,j+2,true,i+1,j+1));
 							}
 							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
-								validMoves.add(new Move(i,j,i-2,j+2,true));
+								validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 							}
 						} else{
 							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
 								takeMove = true;
 								validMoves.clear();
-								validMoves.add(new Move(i,j,i+2,j+2,true));
+								validMoves.add(new Move(i,j,i+2,j+2,true,i+1,j+1));
 							}
 							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i-2,j+2,true));
+									validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 								} else{
-									validMoves.add(new Move(i,j,i-2,j+2,true));
+									validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 								}
 							}
 							if (board[i+1][j+1] == 0 && !takeMove){
@@ -117,48 +146,48 @@ public class AI{
 					if (board[i][j] != 0 && board[i][j] == 10){
 						if (takeMove){
 							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
-								validMoves.add(new Move(i,j,i+2,j+2,true));
+								validMoves.add(new Move(i,j,i+2,j+2,true,i+1,j+1));
 							}
 							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
-								validMoves.add(new Move(i,j,i-2,j+2,true));
+								validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 							}
 							if (board[i+1][j-1] == 2 && board[i+2][j-2] == 0){
-								validMoves.add(new Move(i,j,i+2,j-2,true));
+								validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 							}
 							if (board[i-1][j-1] == 2 && board[i+2][j-2] == 0){
-								validMoves.add(new Move(i,j,i+2,j-2,true));
+								validMoves.add(new Move(i,j,i+2,j-2,true,i-1,j-1));
 							}
 						} else{
 							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
 								takeMove = true;
 								validMoves.clear();
-								validMoves.add(new Move(i,j,i+2,j+2,true));
+								validMoves.add(new Move(i,j,i+2,j+2,true,i+1,j+1));
 							}
 							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i-2,j+2,true));
+									validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 								} else{
-									validMoves.add(new Move(i,j,i-2,j+2,true));
+									validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 								}
 							}
 							if (board[i+1][j-1] == 2 && board[i+2][j-2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i+2,j-2,true));
+									validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 								} else{
-									validMoves.add(new Move(i,j,i+2,j-2,true));
+									validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 								}
 							}
 							if (board[i-1][j-1] == 2 && board[i-2][j-2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i-2,j-2,true));
+									validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 								} else{
-									validMoves.add(new Move(i,j,i-2,j-2,true));
+									validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 								}
 							}
 							if (board[i+1][j+1] == 0 && !takeMove){
@@ -186,24 +215,24 @@ public class AI{
 					if (board[i][j] != 0 && (board[i][j]) == 2){
 						if (takeMove){
 							if (board[i+1][j-1] == 1 && board[i+2][j-2] == 0){
-								validMoves.add(new Move(i,j,i+2,j-2,true));
+								validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 							}
 							if (board[i-1][j-1] == 2 && board[i-2][j-2] == 0){
-								validMoves.add(new Move(i,j,i-2,j-2,true));
+								validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 							}
 						} else{
 							if (board[i+1][j-1] == 2 && board[i+2][j-2] == 0){
 								takeMove = true;
 								validMoves.clear();
-								validMoves.add(new Move(i,j,i+2,j-2,true));
+								validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 							}
 							if (board[i-1][j-1] == 2 && board[i-2][j-2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i-2,j-2,true));
+									validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 								} else{
-									validMoves.add(new Move(i,j,i-2,j-2,true));
+									validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 								}
 							}
 							if (board[i+1][j-1] == 0 && !takeMove){
@@ -218,48 +247,48 @@ public class AI{
 					if (board[i][j] != 0 && board[i][j] == 20){
 						if (takeMove){
 							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
-								validMoves.add(new Move(i,j,i+2,j+2,true));
+								validMoves.add(new Move(i,j,i+2,j+2,true,i+1,j+1));
 							}
 							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
-								validMoves.add(new Move(i,j,i-2,j+2,true));
+								validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 							}
 							if (board[i+1][j-1] == 2 && board[i+2][j-2] == 0){
-								validMoves.add(new Move(i,j,i+2,j-2,true));
+								validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 							}
 							if (board[i-1][j-1] == 2 && board[i+2][j-2] == 0){
-								validMoves.add(new Move(i,j,i+2,j-2,true));
+								validMoves.add(new Move(i,j,i+2,j-2,true,i-1,j-1));
 							}
 						} else{
 							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
 								takeMove = true;
 								validMoves.clear();
-								validMoves.add(new Move(i,j,i+2,j+2,true));
+								validMoves.add(new Move(i,j,i+2,j+2,true,i+1,j+1));
 							}
 							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i-2,j+2,true));
+									validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 								} else{
-									validMoves.add(new Move(i,j,i-2,j+2,true));
+									validMoves.add(new Move(i,j,i-2,j+2,true,i-1,j+1));
 								}
 							}
 							if (board[i+1][j-1] == 2 && board[i+2][j-2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i+2,j-2,true));
+									validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 								} else{
-									validMoves.add(new Move(i,j,i+2,j-2,true));
+									validMoves.add(new Move(i,j,i+2,j-2,true,i+1,j-1));
 								}
 							}
 							if (board[i-1][j-1] == 2 && board[i-2][j-2] == 0){
 								if (!takeMove){
 									takeMove = true;
 									validMoves.clear();
-									validMoves.add(new Move(i,j,i-2,j-2,true));
+									validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 								} else{
-									validMoves.add(new Move(i,j,i-2,j-2,true));
+									validMoves.add(new Move(i,j,i-2,j-2,true,i-1,j-1));
 								}
 							}
 							if (board[i+1][j+1] == 0 && !takeMove){
@@ -292,6 +321,9 @@ public class AI{
 		public int oldX;
 		public int oldY;
 
+		public int takenX;
+		public int takenY;
+
 		public boolean take;
 
 		public Move( int oX, int oY, int nX, int nY, boolean t){
@@ -300,6 +332,16 @@ public class AI{
 			this.oldX = oX;
 			this.oldY = oY;
 			this.take = t;
+		}
+
+		public Move( int oX, int oY, int nX, int nY, boolean t,int tX, int tY){
+			this.newX = nX;
+			this.newY = nY;
+			this.oldX = oX;
+			this.oldY = oY;
+			this.take = t;
+			this.takenX = tX;
+			this.takenY = tY;
 		}
 	}
 
