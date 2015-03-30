@@ -3,6 +3,7 @@ import java.util.*;
 public class AI{
 
 	private int myColor;
+	private int opColor;
 
 ///*Checker[] checkers*/
 	public void determineMove(List<Checker> checkers){
@@ -21,10 +22,15 @@ public class AI{
 		this.myColor = color;
 	}
 
-//*************************************************************************************	
-//*************************************************************************************
-//*************************************************************************************
-// classes to use for internal representation of minimax
+	public void setOpColor(int color){
+		this.opColor = color;
+	}
+
+//*************************************************************	
+//*************************************************************
+// classes to use for internal representation of minimax ******
+//*************************************************************
+//*************************************************************
 	private class InternalRepresentation{
 		public int me;
 		public int meCount;
@@ -42,7 +48,8 @@ public class AI{
 			}
 			this.me = myColor;
 			for (Checker c : checkers){
-				board[c.x][c.y] = c.color;
+				if (c.king) board[c.x][c.y] = c.color * 10; 
+				else board[c.x][c.y] = c.color;
 				if (c.color == me){
 					meCount ++;
 				} else {
@@ -50,10 +57,10 @@ public class AI{
 				}
 			}
 			calculateValue();
-			determineValidMoves();
+			determineValidMoves(me);
 		}
 
-		public InternalRepresentation(InternalRepresentation oldR, Move move){
+		public InternalRepresentation(InternalRepresentation oldR, Move move, int who){
 			board = oldR.board;
 
 		}
@@ -62,8 +69,95 @@ public class AI{
 			this.value = meCount - opCount;
 		}
 
-		private void  determineValidMoves(){
+		private void  determineValidMoves(int whoseMove){
+			if (whoseMove == 1){
+				determineRedMoves();
+			}
+			if (whoseMove == 2){
+				determineBlackMoves();
+			}
+		}
 
+//!!!!!!!!!!!HANDLE KING CASE!!!!!!!!!!!!!!!!!!!!!!!
+		private void determineRedMoves(){
+			boolean takeMove = false;
+			for (int i = 0; i < 8; i++ ){
+				for (int j = 0; j < 8; j++ ){
+					if (board[i][j] != 0 && (board[i][j]) == 1 || 
+						board[i][j] == 10){
+						if (takeMove){
+							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
+								validMoves.add(new Move(i,j,i+2,j+2,true));
+							}
+							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
+								validMoves.add(new Move(i,j,i-2,j+2,true));
+							}
+						} else{
+							if (board[i+1][j+1] == 2 && board[i+2][j+2] == 0){
+								takeMove = true;
+								validMoves.clear();
+								validMoves.add(new Move(i,j,i+2,j+2,true));
+							}
+							if (board[i-1][j+1] == 2 && board[i-2][j+2] == 0){
+								if (!takeMove){
+									takeMove = true;
+									validMoves.clear();
+									validMoves.add(new Move(i,j,i-2,j+2,true));
+								} else{
+									validMoves.add(new Move(i,j,i-2,j+2,true));
+								}
+							}
+							if (board[i+1][j+1] == 0 && !takeMove){
+								validMoves.add(new Move(i,j,i+1,j+1,false));
+							}
+							if (board[i-1][j+1] == 0 && !takeMove){
+								validMoves.add(new Move(i,j,i-1,j+1,false));
+							}
+						}
+					}
+				}
+			}
+		}
+
+//!!!!!!!!!!!HANDLE KING CASE!!!!!!!!!!!!!!!!!!!!!!!
+		private void determineBlackMoves(){
+			boolean takeMove = false;
+			for (int i = 0; i < 8; i++ ){
+				for (int j = 0; j < 8; j++ ){
+					if (board[i][j] != 0 && (board[i][j]) == 2 || 
+						board[i][j] == 20){
+						if (takeMove){
+							if (board[i+1][j-1] == 1 && board[i+2][j-2] == 0){
+								validMoves.add(new Move(i,j,i+2,j-2,true));
+							}
+							if (board[i-1][j-1] == 2 && board[i-2][j-2] == 0){
+								validMoves.add(new Move(i,j,i-2,j-2,true));
+							}
+						} else{
+							if (board[i+1][j-1] == 2 && board[i+2][j-2] == 0){
+								takeMove = true;
+								validMoves.clear();
+								validMoves.add(new Move(i,j,i+2,j-2,true));
+							}
+							if (board[i-1][j-1] == 2 && board[i-2][j-2] == 0){
+								if (!takeMove){
+									takeMove = true;
+									validMoves.clear();
+									validMoves.add(new Move(i,j,i-2,j-2,true));
+								} else{
+									validMoves.add(new Move(i,j,i-2,j-2,true));
+								}
+							}
+							if (board[i+1][j-1] == 0 && !takeMove){
+								validMoves.add(new Move(i,j,i+1,j-1,false));
+							}
+							if (board[i-1][j-1] == 0 && !takeMove){
+								validMoves.add(new Move(i,j,i-1,j-1,false));
+							}
+						}
+					}
+				}
+			}
 		}
 
 		public boolean isTerminal(){
@@ -78,11 +172,14 @@ public class AI{
 		public int oldX;
 		public int oldY;
 
-		public Move(int nX, int nY, int oX, int oY){
+		public boolean take;
+
+		public Move( int oX, int oY, int nX, int nY, boolean t){
 			this.newX = nX;
 			this.newY = nY;
 			this.oldX = oX;
 			this.oldY = oY;
+			this.take = t;
 		}
 	}
 

@@ -8,5 +8,6 @@ public class Checker{
     this.x = x;
     this.y = y;
 	this.color = color;
+	this.king = false;
   }
 }
