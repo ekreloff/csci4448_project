@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.*;
 
 public class LeaderBoard extends JApplet implements ActionListener{
-  String docRoot = new String("http://localhost:8888/");
+  String docRoot = new String("https://simplejavacheckersapplet.herokuapp.com/");
 	JFrame frame;
 	JTextArea lArea;
   JLabel nameLabel;
