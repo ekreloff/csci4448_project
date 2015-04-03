@@ -91,7 +91,7 @@ public class LeaderBoard extends JApplet implements ActionListener{
   public void writeFile(String text){
     try{
       URL url = new URL(docRoot + "leaderboard.php?name=" + URLEncoder.encode(text, "UTF-8"));
-      //System.out.println(url.getPath());
+      System.out.println(url.getPath());
       URLConnection urlConn = url.openConnection();
       urlConn.getContent();
     }catch(IOException e){
