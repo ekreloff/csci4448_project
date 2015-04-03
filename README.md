@@ -7,6 +7,6 @@ https://simplejavacheckersapplet.herokuapp.com/
 1. Compile the applet with:
   * **javac** SimpleJavaApplet.java
 3. To run the applet:
-  * **appletviewer** index.html 
+  * **appletviewer** index.html or go to heroku page
 
 
