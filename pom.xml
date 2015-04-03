@@ -1,3 +1,5 @@
 <project>
 	<name>SimpleJavaCheckersApplet</name>
+	<modelVersion>1.0.0</modelVersion>
+	<groupId>SimpleJavaCheckersApplet.app</groupId>
 </project>
