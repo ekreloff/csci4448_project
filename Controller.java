@@ -10,11 +10,17 @@ import java.net.*;
 
 public class Controller extends JApplet/* implements MouseListener*/{
   private GameBoard board;
+  private GameScene nongenericscene;
+
 
   public void init(){
 		board = new GameBoard();
 		//addMouseListener(this);
-	}
+  }
+
+  public void paint(Graphics g){
+    nongenericscene.draw(g);
+  }
 
   /*
   //TESTING THE MODEL HERE FOR NOW
