@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class GameBoard extends SimpleJavaApplet{
 	private int size = 40;
-  	private ArrayList<Checker> checkers = new ArrayList<Checker>(24);
+	private ArrayList<Checker> checkers = new ArrayList<Checker>(24);
 	private int red = 1;
 	private int black = 2;
 
@@ -34,19 +34,19 @@ public class GameBoard extends SimpleJavaApplet{
     }
   }
   */
-	
+
 	public void printCheckers(){
 		for(Checker c : this.checkers){
         System.out.println("\nChecker: " + c.x + " " + c.y + " " + c.color);
 		}
 	}
-		
+
 	public void drawBoard(Graphics g){
 		for(int i = 0; i <=7; i++){
 			this.drawRows(g, i, size);
 		}
 	}
-	
+
 	public void drawRedCheckers(Graphics g){
 		for(int i = 0; i < 3; i++){
 			for(int j = 2; j <= 8; j+=2){
@@ -64,7 +64,7 @@ public class GameBoard extends SimpleJavaApplet{
 			}
 		}
 	}
-	
+
 	public void drawBlackCheckers(Graphics g){
 		for(int i = 5; i < 8; i++){
 			for(int j = 2; j <= 8; j+=2){
@@ -82,7 +82,7 @@ public class GameBoard extends SimpleJavaApplet{
 			}
 		}
 	}
-	
+
 	public void drawRows(Graphics g, int y, int size){
 		for(int i = 1;i <= 8; i++){
 			if((y+i)%2 == 1){

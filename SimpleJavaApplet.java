@@ -4,7 +4,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 
-
+//Suppress warning about implementing serializable interface
+@SuppressWarnings("serial")
 
 public class SimpleJavaApplet extends JApplet implements MouseListener{
 	GameBoard board;
@@ -14,22 +15,22 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 	JScrollPane sp;
 	JFrame menu;
 	JButton start, instructions, settings, leaderBoardB;
-	
+
 	public void init(){
 		board = new GameBoard();
 		mainMenu = MainMenu.getInstance();
 		addMouseListener(this);
 		this.mouseCoordinatesArea();
 	}
-	
-	
+
+
 	public void paint(Graphics g){
 		board.drawBoard(g);
 		board.drawRedCheckers(g);
 		board.drawBlackCheckers(g);
 		board.printCheckers();
 	}
-	
+
 	public void mouseEntered(MouseEvent me){}
 	public void mouseExited(MouseEvent me){}
 
@@ -41,8 +42,8 @@ public class SimpleJavaApplet extends JApplet implements MouseListener{
 	}
 	public void mouseReleased(MouseEvent me){}
 	public void mouseClicked(MouseEvent me){}
-	
-	/* Creates the text area that shows the mouse coordinates */	
+
+	/* Creates the text area that shows the mouse coordinates */
 	public void mouseCoordinatesArea(){
 		setLayout(new BorderLayout());
 		mouseCoordinates = new JTextArea(5, 5);
