@@ -1,13 +1,19 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.*;
+import java.net.*;
+
 //Suppress warning about implementing serializable interface
 @SuppressWarnings("serial")
 
 
-public class Controller extends JApplet implements MouseListener{
+public class Controller extends JApplet/* implements MouseListener*/{
   private GameBoard board;
 
   public void init(){
 		board = new GameBoard();
-		addMouseListener(this);
+		//addMouseListener(this);
 	}
 
   /*
