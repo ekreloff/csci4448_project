@@ -7,7 +7,7 @@ public class Checker{
   public Checker(int x, int y, int color){
     this.x = x;
     this.y = y;
-	this.color = color;
-	this.king = false;
+	  this.color = color;
+	  this.king = false;
   }
 }
