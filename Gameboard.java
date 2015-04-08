@@ -3,14 +3,14 @@ import java.util.ArrayList;
 //import javax.swing.*;
 
 public class GameBoard{
-	//private int size = 40;
-	private ArrayList<Checker> checkers = new ArrayList<Checker>(24);
+		public static final int size = 40; //static makes it accesible through the class without instantiation, final keeps it constant
+		private ArrayList<Checker> checkers = new ArrayList<Checker>(24);
 	//private int red = 1;
 	//private int black = 2;
+ 	  public Player player1;
+  	public Player player2;
 
- 	//public Player player1;
-  	//public Player player2;
-  	public Gameboard(Player player1, Player player2){
+  	public GameBoard(Player player1, Player player2){
     	this.player1 = player1;
     	this.player2 = player2;
     	this.checkers = new ArrayList<Checker>(24);
@@ -25,24 +25,27 @@ public class GameBoard{
 							if(y < 4){
 								//Player 1
 								Checker checker = new Checker(x, y, 1);
+								this.checkers.add(checker);
 							}else{
 								//Player 2
 								Checker checker = new Checker(x, y, 2);
+								this.checkers.add(checker);
 							}
-            	this.checkers.add(checker);
+
+							this.printCheckers();
           	}
           }
         }
     	}
   	}
-/*
+
 
 	public void printCheckers(){
 		for(Checker c : this.checkers){
-        System.out.println("\nChecker: " + c.x + " " + c.y + " " + c.color);
+        System.out.println("\nChecker: " + c.x + " " + c.y + " " + c.player);
 		}
 	}
-
+	/*
 	public void drawBoard(Graphics g){
 		for(int i = 0; i <=7; i++){
 			this.drawRows(g, i, size);
