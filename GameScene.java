@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
-public class GameScene{
+public class GameScene extends Scene{
   public void draw(Graphics g){
 
   }
