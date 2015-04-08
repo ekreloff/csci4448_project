@@ -20,7 +20,9 @@ public class Controller extends JApplet implements MouseListener, MouseMotionLis
   public void init(){
     Player player1 = new HumanPlayer();
     Player player2 = new HumanPlayer(); // TODO: These need to be input taken from the main menu on which types of players are playing the game.
-		board = new GameBoard(player1, player2);
+    player1.selectedColor = Color.red;
+    player2.selectedColor = Color.black; // TODO: These need to be chosen at the setup screen for the game.
+    board = new GameBoard(player1, player2);
 
     currentScene = new GameScene(); // GameScene to start.
 
@@ -29,19 +31,24 @@ public class Controller extends JApplet implements MouseListener, MouseMotionLis
   }
 
   public void paint(Graphics g){
-    int sizeX = GameBoard.size*8;
-    int sizeY = GameBoard.size*8;
+    int boardWidth = GameBoard.size*8; //Width of board
+    int boardHeight = GameBoard.size*8; //Height of board
+
+    //What type of Mouse Event just happened and what to do in response
     switch(eventType){
       case "MouseMoved":
       {
-        g.clearRect(0, sizeY, sizeX, GameBoard.size); //clear just the bottom text
+        g.clearRect(0, boardHeight, boardWidth, GameBoard.size*2); //clear just the bottom text. Its x2 just to make sure it gets all of it.
         break;
       }
     }
-    g.drawString(mouseMovedCoordinates, 40, 340);
+    g.drawString(mouseMovedCoordinates, 0, boardHeight + GameBoard.size); //Draw mouse coordinate string to bottom of screen.
+
     currentScene.draw(g); // whatever scene has been loaded call its draw method.
   }
 
+
+  //Methods required to implement Mouse Listener interfaces
   public void mouseEntered(MouseEvent me){}
   public void mouseExited(MouseEvent me){}
   public void mousePressed(MouseEvent me){}
