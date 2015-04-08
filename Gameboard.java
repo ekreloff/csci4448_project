@@ -45,13 +45,8 @@ public class GameBoard{
         System.out.println("\nChecker: " + c.x + " " + c.y + " " + c.player);
 		}
 	}
+	
 	/*
-	public void drawBoard(Graphics g){
-		for(int i = 0; i <=7; i++){
-			this.drawRows(g, i, size);
-		}
-	}
-
 	public void drawRedCheckers(Graphics g){
 		for(int i = 0; i < 3; i++){
 			for(int j = 2; j <= 8; j+=2){
@@ -88,17 +83,7 @@ public class GameBoard{
 		}
 	}
 
-	public void drawRows(Graphics g, int y, int size){
-		for(int i = 1;i <= 8; i++){
-			if((y+i)%2 == 1){
-				g.setColor(Color.lightGray);
-				g.fillRect(i*size, y*size, size, size);
-			}else{
-				g.setColor(Color.darkGray);
-				g.fillRect(i*size, y*size, size, size);
-			}
-		}
-	}
+
 	*/
   //getter for checkers should return read only array.
 }
