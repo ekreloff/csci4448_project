@@ -10,9 +10,11 @@ import java.net.*;
 @SuppressWarnings("serial")
 
 
-public class Controller extends JApplet/* implements MouseListener*/{
+public class Controller extends JApplet implements MouseListener, MouseMotionListener{
   private GameBoard board;
   private Scene currentScene;
+  private String mouseMovedCoordinates = "";
+  private String eventType = "None";
 
 
   public void init(){
@@ -21,14 +23,39 @@ public class Controller extends JApplet/* implements MouseListener*/{
 		board = new GameBoard(player1, player2);
 
     currentScene = new GameScene(); // GameScene to start.
-		//addMouseListener(this);
+
+		addMouseListener(this); //Controller handles Mouse events.
+    addMouseMotionListener(this); //Controller handles continuous Mouse events.
   }
 
   public void paint(Graphics g){
-
-    g.clearRect(0, 0, GameBoard.size, GameBoard.size); //clears a rectangle with dimansions size x size at the origin, so the whole screen.
+    int sizeX = GameBoard.size*8;
+    int sizeY = GameBoard.size*8;
+    switch(eventType){
+      case "MouseMoved":
+      {
+        g.clearRect(0, sizeY, sizeX, GameBoard.size); //clear just the bottom text
+        break;
+      }
+    }
+    g.drawString(mouseMovedCoordinates, 40, 340);
     currentScene.draw(g); // whatever scene has been loaded call its draw method.
   }
+
+  public void mouseEntered(MouseEvent me){}
+  public void mouseExited(MouseEvent me){}
+  public void mousePressed(MouseEvent me){}
+  public void mouseReleased(MouseEvent me){
+    repaint();
+  }
+  public void mouseClicked(MouseEvent me){}
+  public void mouseMoved(MouseEvent me){
+    eventType = "MouseMoved";
+    mouseMovedCoordinates = "Mouse moved: (" + me.getX() + ", " + me.getY() + ")";
+    repaint();
+  }
+  public void mouseDragged(MouseEvent me){}
+
 
   /*
   //TESTING THE MODEL HERE FOR NOW

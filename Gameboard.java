@@ -31,22 +31,20 @@ public class GameBoard{
 								Checker checker = new Checker(x, y, 2);
 								this.checkers.add(checker);
 							}
-
-							this.printCheckers();
           	}
           }
         }
     	}
   	}
 
-
+		/*
 	public void printCheckers(){
 		for(Checker c : this.checkers){
         System.out.println("\nChecker: " + c.x + " " + c.y + " " + c.player);
 		}
 	}
-	
-	/*
+
+
 	public void drawRedCheckers(Graphics g){
 		for(int i = 0; i < 3; i++){
 			for(int j = 2; j <= 8; j+=2){
