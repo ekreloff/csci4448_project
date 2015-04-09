@@ -6,7 +6,6 @@ public class Checker{
   public int y;
   public int player;
   public Color color;
-  //public int color;
 
   public Checker(int x, int y, int player){
     this.x = x;
