@@ -19,12 +19,12 @@ public class Controller extends JApplet implements MouseListener, MouseMotionLis
   private String mouseClickedDebugInfo = "";
   private String mousePressedDebugInfo = "";
   private String eventType = "None";
-  private boolean playerTurn;
+  private boolean playerOneTurn;
   private Checker savedChecker;
 
   public void init(){
     Random rand = new Random();
-    playerTurn = rand.nextBoolean();
+    playerOneTurn = rand.nextBoolean();
     Player player1 = new HumanPlayer();
     Player player2 = new HumanPlayer(); // TODO: These need to be input taken from the main menu on which types of players are playing the game.
     player1.selectedColor = Color.red;
@@ -41,104 +41,103 @@ public class Controller extends JApplet implements MouseListener, MouseMotionLis
     int boardWidth = GameBoard.size*8; //Width of board
     int boardHeight = GameBoard.size*8; //Height of board
 
-    g.clearRect(0, 0, boardWidth + 150, boardHeight + 150); //Clear whole screen including text at the bottom.
-/*
-    //What type of Mouse Event just happened and what to do in response
-    switch(eventType){
-      case "MouseMoved":
-      {
-        g.clearRect(0, boardHeight, boardWidth, GameBoard.size + 10); //clear just the bottom text. Its +10 just to make sure it gets all of the text.
-        break;
-      }
-      case "MouseDragged":
-      {
-
-        break;
-      }
-      case "MouseClicked":
-      {
-
-      }
-    }*/
-    g.drawString(mouseMovedCoordinates, 0, boardHeight + 20); //Draw mouse coordinate string to bottom of screen.
-    g.drawString(mouseDraggedDebugInfo, 0, boardHeight + 40); //Draw mouse coordinate string to bottom of screen.
-    g.drawString(mouseClickedDebugInfo, 0, boardHeight + 60); //Draw mouse coordinate string to bottom of screen.
+    //Clear whole screen including text at the bottom.
+    g.clearRect(0, 0, boardWidth + 150, boardHeight + 150);
+    //Draw mouse debug strings on bottom of window
+    g.drawString(mouseMovedCoordinates, 0, boardHeight + 20);
+    g.drawString(mouseDraggedDebugInfo, 0, boardHeight + 40);
+    g.drawString(mouseClickedDebugInfo, 0, boardHeight + 60);
     g.drawString(mousePressedDebugInfo, 0, boardHeight + 80);
-    currentScene.draw(g); // whatever scene has been loaded call its draw method.
-  }
 
+    // whatever scene has been loaded call its draw method.
+    currentScene.draw(g);
+  }
+/*
+  // Checks if a move is valid.
+    public boolean validMove(int movefrom, int moveto) {
+
+	// Gets array indeces corresponding to the move, from parameters.
+	int xfrom = movefrom/10 - 1;
+	int yfrom = movefrom%10 - 1;
+	int xto = moveto/10 - 1;
+	int yto = moveto%10 - 1;
+
+	// Check if indeces in range, if not, return false.
+	if (xfrom < 0 || xfrom > 7 || yfrom < 0 || yfrom > 7 ||
+	    xto < 0 || xto > 7 || yto < 0 || yto > 7)
+	    return false;
+
+	// Check to see you are moving your piece to a blank square.
+	else if (board[xfrom][yfrom]==whosemove && board[xto][yto]=='_') {
+
+	    // Checks case of simple move
+	    if (Math.abs(xfrom-xto)==1) {
+		if ((whosemove == 'r') && (yto - yfrom == 1))
+		    return true;
+		else if ((whosemove == 'b') && (yto - yfrom == -1))
+		    return true;
+	    }
+
+	    // Checks case of a jump
+	    else if (Math.abs(xfrom-xto)==2) {
+		if (whosemove == 'r' && (yto - yfrom == 2) &&
+		    board[(xfrom+xto)/2][(yfrom+yto)/2] == 'b')
+		    return true;
+		else if (whosemove == 'b' && (yto - yfrom == -2) &&
+		    board[(xfrom+xto)/2][(yfrom+yto)/2] == 'r')
+		    return true;
+	    }
+	}
+	// If move is neither a simple one or a jump, it is not legal.
+	return false;
+}*/
 
   //Methods required to implement Mouse Listener interfaces
-  public void mouseEntered(MouseEvent me){}
-  public void mouseExited(MouseEvent me){}
   public void mousePressed(MouseEvent me){
-    //Save coordinates
+    int tileSize = GameBoard.size;
+    int mouseX = me.getX() / tileSize + 1;
+    int mouseY = me.getY() / tileSize + 1;
+
     mousePressedDebugInfo = "Mouse pressed debug - mousex: " + me.getX() + " mousey: " + me.getY();
+    for(Checker checker : GameBoard.checkers){
+      if(playerOneTurn){
+        if((checker.player == 1) && (mouseX == checker.x) && (mouseY == checker.y)){
+          savedChecker = checker;
+        }
+      }else{
+        if((checker.player == 2) && (mouseX == checker.x) && (mouseY == checker.y)){
+          savedChecker = checker;
+        }
+      }
+
+    }
   }
+
+  public void mouseDragged(MouseEvent me){
+    int tileSize = GameBoard.size;
+    int mouseX = me.getX() / tileSize + 1;
+    int mouseY = me.getY() / tileSize + 1;
+
+    mouseDraggedDebugInfo = "Mouse dragged debug - mousex: " + me.getX() + " mousey: " + me.getY();
+    //Check saved coordinates to see if a players piece is underneath, and if it is continuously redraw it at the drag position
+    if(savedChecker != null){
+      savedChecker.x = mouseX;
+      savedChecker.y = mouseY;
+      repaint();
+    }
+  }
+
   public void mouseReleased(MouseEvent me){
-    //Reset coordinates
+    //Reset checker
     savedChecker = null;
     repaint();
   }
 
-  public void mouseClicked(MouseEvent me){
-    mouseClickedDebugInfo = "Mouse clicked debug - mousex: " + me.getX() + " mousey: " + me.getY();
-  /*  int mouseX = me.getX();
-    int mouseY = me.getY();
-    int tileSize = GameBoard.size;
-    for(Checker checker : GameBoard.checkers){
-      if((mouseX >= checker.x) && (mouseX <= (checker.x + tileSize))){
-        if((mouseY >= checker.y) && (mouseY <= checker.y + tileSize)){
-          //this checker is underneath mouse.
-          savedChecker = checker;
-        }
-      }
-    }*/
-    int tileSize = GameBoard.size;
-    int mouseX = me.getX() / tileSize + 1;
-    int mouseY = me.getY() / tileSize + 1;
-    for(Checker checker : GameBoard.checkers){
-      if((mouseX == checker.x) && (mouseY == checker.y)){
-        savedChecker = checker;
-      }
-    }
-  }
-  public void mouseMoved(MouseEvent me){
-    eventType = "MouseMoved";
-    mouseMovedCoordinates = "Mouse moved: (" + me.getX() + ", " + me.getY() + ")";
-    repaint();
-  }
-  public void mouseDragged(MouseEvent me){
-    eventType = "MouseDragged";
-    //mouseDraggedDebugInfo = "Mouse dragged debug - mousex: " + me.getX() + "mousey: " + me.getY() + "checkerx: " + savedChecker.x + "checkery: " + savedChecker.y;
-    mouseDraggedDebugInfo = "Mouse dragged debug - mousex: " + me.getX() + " mousey: " + me.getY();
+  public void mouseMoved(MouseEvent me){} //stub
 
-    int tileSize = GameBoard.size;
-    int mouseX = me.getX() / tileSize + 1;
-    int mouseY = me.getY() / tileSize + 1;
-    /*int tileSize = GameBoard.size;
-    int mouseX = me.getX() / tileSize;
-    int mouseY = me.getY() / tileSize;
-    for(Checker checker : GameBoard.checkers){
-      if((mouseX == checker.x) && (mouseY == checker.y)){
+  public void mouseClicked(MouseEvent me){} //stub
 
-      }
-    }
+  public void mouseEntered(MouseEvent me){} //stub
 
-    //this checker is underneath mouse.
-    eventType = "MouseDragged";
-    checker.x = me.getX();
-    checker.y = me.getY();
-    //mouseMovedCoordinates = "Mouse dragged: (" + me.getX() + ", " + me.getY() + ")";
-    repaint();
-    */
-    //Check saved coordinates to see if a players piece is underneath, and if it is continuously redraw it at the drag position
-    if(savedChecker != null){ //Check to make sure savedChecker isnt null
-      eventType = "MouseDragged";
-      savedChecker.x = mouseX;
-      savedChecker.y = mouseY;
-      //mouseMovedCoordinates = "Mouse dragged: (" + me.getX() + ", " + me.getY() + ")";
-      repaint();
-    }
-  }
+  public void mouseExited(MouseEvent me){} //stub
 }
