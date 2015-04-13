@@ -52,6 +52,14 @@ public class Controller extends JApplet implements MouseListener, MouseMotionLis
     // whatever scene has been loaded call its draw method.
     currentScene.draw(g);
   }
+  
+  public boolean validMove(int mouseX, int mouseY){
+  	// GameBoard.checkers
+  	//for(Checker checker : GameBaord.checkers){
+  		
+  	//}
+  }
+  
 /*
   // Checks if a move is valid.
     public boolean validMove(int movefrom, int moveto) {
